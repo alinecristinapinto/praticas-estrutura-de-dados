@@ -13,7 +13,7 @@
 #endif
 
 typedef struct vetor{
-	double v[MAXTAM];
+	double * m;
 	int tam;
 	int id;
 } vetor_tipo;
