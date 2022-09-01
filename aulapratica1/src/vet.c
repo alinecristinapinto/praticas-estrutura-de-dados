@@ -38,7 +38,7 @@ void inicializaVetorNulo(vetor_tipo * vet)
 {
   int i;
   // inicializa todos os elementos do vetor com 0, por seguranca 
-  for (i=0; i<MAXTAM; i++){
+  for (i=0; i<vet->tam; i++){
     vet->m[i] = 0;
   }
 }
