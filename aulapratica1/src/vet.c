@@ -28,7 +28,7 @@ void criaVetor(vetor_tipo * vet, int tam, int id)
   // inicializa o identificador da vetor, para rastreamento
   vet->id = id;
   // aloca memoria para o vetor m
-  vet->m = new double[tam];
+  vet->m = (double*)malloc(sizeof(double)*tam);
 }
 
 void inicializaVetorNulo(vetor_tipo * vet)
@@ -181,5 +181,5 @@ void destroiVetor(vetor_tipo *a)
   // torna as dimensoes invalidas
   a->id = a->tam = -1;
   // limpa a memoria alocada
-  delete[] a->m;
+  free(a->m);
 }
