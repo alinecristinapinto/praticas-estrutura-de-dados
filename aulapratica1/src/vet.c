@@ -27,6 +27,8 @@ void criaVetor(vetor_tipo * vet, int tam, int id)
   vet->tam = tam;
   // inicializa o identificador da vetor, para rastreamento
   vet->id = id;
+  // aloca memoria para o vetor m
+  vet->m = new double[tam];
 }
 
 void inicializaVetorNulo(vetor_tipo * vet)
@@ -37,7 +39,7 @@ void inicializaVetorNulo(vetor_tipo * vet)
   int i;
   // inicializa todos os elementos do vetor com 0, por seguranca 
   for (i=0; i<MAXTAM; i++){
-    vet->v[i] = 0;
+    vet->m[i] = 0;
   }
 }
 
@@ -51,7 +53,7 @@ void inicializaVetorAleatorio(vetor_tipo * vet)
   inicializaVetorNulo(vet);
   // inicializa a parte alocada da vetor com valores aleatorios
   for (i=0; i<vet->tam; i++){
-    vet->v[i] = drand48()*INITRANDOMRANGE;
+    vet->m[i] = drand48()*INITRANDOMRANGE;
   }
 }
 
@@ -72,7 +74,7 @@ void imprimeVetor(vetor_tipo * vet)
 
   // imprime o vetor
   for (i=0; i<vet->tam; i++){
-    printf("%6.2f ",vet->v[i]);
+    printf("%6.2f ",vet->m[i]);
   }
   printf("\n");
 }
@@ -85,7 +87,7 @@ void escreveElemento(vetor_tipo * vet, int pos, double v)
   // verifica se pos e valido
   erroAssert((pos<0)||(pos>=vet->tam),"Indice invalido");
 
-  vet->v[pos] = v;
+  vet->m[pos] = v;
 }
 
 double leElemento (vetor_tipo * vet, int pos)
@@ -96,7 +98,7 @@ double leElemento (vetor_tipo * vet, int pos)
   // verifica se pos e valido
   erroAssert((pos<0)||(pos>=vet->tam),"Indice invalido");
 
-  return vet->v[pos];
+  return vet->m[pos];
 }
 
 void copiaVetor(vetor_tipo *src, vetor_tipo * dst, int dst_id)
@@ -112,7 +114,7 @@ void copiaVetor(vetor_tipo *src, vetor_tipo * dst, int dst_id)
   inicializaVetorNulo(dst);
   // copia os elementos do vetor src
   for (i=0; i<src->tam; i++){
-    dst->v[i] = src->v[i];
+    dst->m[i] = src->m[i];
   }
 }
 
@@ -131,7 +133,7 @@ void somaVetores(vetor_tipo *a, vetor_tipo *b, vetor_tipo *c)
 
   // faz a soma elemento a elemento
   for (i=0; i<a->tam; i++){
-    c->v[i] = a->v[i]+b->v[i];
+    c->m[i] = a->m[i]+b->m[i];
   }
 }
 
@@ -148,7 +150,7 @@ double produtoInternoVetores(vetor_tipo * a, vetor_tipo * b)
 
   // calcula o produto interno
   for (i=0; i<a->tam;i++){
-    s += a->v[i]*b->v[i];
+    s += a->m[i]*b->m[i];
   }
   return s;
 }
@@ -163,7 +165,7 @@ double normaVetor(vetor_tipo *a)
   
   // faz a transposicao como se a vetor fosse quadrada
   for (i=0; i<a->tam; i++){
-    s+= (a->v[i])*(a->v[i]);
+    s+= (a->m[i])*(a->m[i]);
   }
   return sqrt(s);
 }
@@ -178,4 +180,6 @@ void destroiVetor(vetor_tipo *a)
 
   // torna as dimensoes invalidas
   a->id = a->tam = -1;
+  // limpa a memoria alocada
+  delete[] a->m;
 }
